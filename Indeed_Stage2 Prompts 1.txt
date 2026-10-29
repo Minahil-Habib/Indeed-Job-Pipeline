@@ -1,5 +1,3 @@
-Gemini_Key: AIzaSyCK_E52s1prUr2Xi8KafWaPdlOERjgE74c 
-Model: gemini-2.5-flash-lite
 
 
 Refined Prompt Example (For Technical Tools) :
