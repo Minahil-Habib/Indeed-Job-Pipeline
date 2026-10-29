@@ -1,0 +1,110 @@
+{
+  "top_tech_skills": {
+    "version": "1.0",
+    "model": "gemini-2.5-flash-lite",
+    "input_fields": [
+      "job_description"
+    ],
+    "prompt": "INPUT:\nJob description:\n{job_description}\n\nINSTRUCTIONS:\nYou are a job seeker. Analyse the job description and identify the top technical tools explicitly mentioned.\n\nOnly include technical tool names. Do not include soft skills, responsibilities, methodologies, generic technical concepts or descriptive modifiers.\n\nReturn multiple tools as a comma-separated list.\n\nExample: SQL, Azure, Databricks, Python\n\nIf no technical tools are explicitly mentioned, return exactly: None",
+    "expected_output_type": "string",
+    "expected_output": "Comma-separated technical tools or None"
+  },
+
+  "top_tech_skills_validation": {
+    "version": "1.0",
+    "model": "gemini-2.5-flash-lite",
+    "input_fields": [
+      "top_tech_skills"
+    ],
+    "prompt": "INPUT:\nTechnical skills:\n{top_tech_skills}\n\nINSTRUCTIONS:\nReview the above list and keep only actual technical tools, software platforms, programming languages, databases, cloud platforms, frameworks, libraries or named technologies.\n\nRemove soft skills, methodologies, responsibilities, generic technical concepts and business terminology.\n\nReturn the remaining tools as a comma-separated list.\n\nIf no valid technical tools remain, return exactly: None",
+    "expected_output_type": "string",
+    "expected_output": "Comma-separated technical tools or None"
+  },
+
+  "role_cat": {
+    "version": "1.0",
+    "model": "gemini-2.5-flash-lite",
+    "input_fields": [
+      "job_description",
+      "top_tech_skills",
+      "job_title"
+    ],
+    "prompt": "INPUT:\nJob description:\n{job_description}\n\nTechnical tools:\n{top_tech_skills}\n\nJob title:\n{job_title}\n\nINSTRUCTIONS:\nDetermine whether this role is Data Analyst or Data Engineer.\n\nChoose only from the approved values.\nIf the role fits both, return both separated by a comma.\nDo not provide explanations.",
+    "expected_output_type": "multi_enum",
+    "expected_output": [
+      "Data Analyst",
+      "Data Engineer"
+    ]
+  },
+
+  "function": {
+    "version": "1.0",
+    "model": "gemini-2.5-flash-lite",
+    "input_fields": [
+      "job_description"
+    ],
+    "prompt": "INPUT:\nJob description:\n{job_description}\n\nINSTRUCTIONS:\nIdentify the business function this job supports.\n\nReturn only function names. Do not return industries or domains such as Banking, Healthcare, Education, Construction or Financial Services. Do not return Data Analytics or Data Engineering as the function.\n\nMultiple functions may be comma separated.\n\nIf the function cannot be reliably determined, return exactly: None",
+    "expected_output_type": "string",
+    "expected_output": "One or more comma-separated business functions or None"
+  },
+
+  "industry": {
+    "version": "1.0",
+    "model": "gemini-2.5-flash-lite",
+    "input_fields": [
+      "job_description",
+      "source_industry"
+    ],
+    "prompt": "INPUT:\nJob description:\n{job_description}\n\nExisting source industry information:\n{source_industry}\n\nINSTRUCTIONS:\nIdentify the industry or business domain associated with the company or role.\n\nReturn only industry/domain names. Do not return business functions such as Finance, Marketing or Human Resources. Do not return Data Analytics or Data Engineering.\n\nPrefer explicit source industry information when it is consistent with the advertisement. Do not infer an industry without reasonable evidence.\n\nIf the industry cannot be reliably identified, return exactly: None",
+    "expected_output_type": "string",
+    "expected_output": "One or more comma-separated industries or None"
+  },
+
+  "exp_level": {
+    "version": "1.0",
+    "model": "gemini-2.5-flash-lite",
+    "input_fields": [
+      "job_description",
+      "job_title"
+    ],
+    "prompt": "INPUT:\nJob description:\n{job_description}\n\nJob title:\n{job_title}\n\nINSTRUCTIONS:\nDetermine the required experience level.\n\nChoose exactly one:\nEntry-level\nAssociate\nSenior\nVery senior\nNot specified\n\nDefinitions:\nEntry-level = 0 to 2 years\nAssociate = 2 to 5 years\nSenior = 5 to 10 years\nVery senior = 10 or more years\n\nUse explicit years of experience where available. Job-title seniority may also be used as evidence. Do not guess when insufficient information is available.\n\nReturn only one option.",
+    "expected_output_type": "enum",
+    "expected_output": [
+      "Entry-level",
+      "Associate",
+      "Senior",
+      "Very senior",
+      "Not specified"
+    ]
+  },
+
+  "pr_citizenship_req": {
+    "version": "1.0",
+    "model": "gemini-2.5-flash-lite",
+    "input_fields": [
+      "job_description"
+    ],
+    "prompt": "INPUT:\nJob description:\n{job_description}\n\nINSTRUCTIONS:\nIdentify whether the advertisement explicitly states any Australian residency, citizenship or work-right requirements.\n\nChoose only from:\nPermanent Residency\nCitizenship\nValid work visa\nNone mentioned\n\nMultiple explicit requirements may be comma separated. Do not infer residency or citizenship requirements simply because the role is located in Australia.\n\nIf nothing is stated, return: None mentioned",
+    "expected_output_type": "multi_enum",
+    "expected_output": [
+      "Permanent Residency",
+      "Citizenship",
+      "Valid work visa",
+      "None mentioned"
+    ]
+  },
+
+  "sec_clearance": {
+    "version": "1.0",
+    "model": "gemini-2.5-flash-lite",
+    "input_fields": [
+      "job_description"
+    ],
+    "prompt": "INPUT:\nJob description:\n{job_description}\n\nINSTRUCTIONS:\nDetermine whether the advertisement explicitly requires either a security clearance or a police/background check.\n\nReturn true only when one of these requirements is explicitly stated. Otherwise return false.\n\nReturn only true or false.",
+    "expected_output_type": "boolean",
+    "expected_output": [
+      "true",
+      "false"
+    ]
+  }
+}

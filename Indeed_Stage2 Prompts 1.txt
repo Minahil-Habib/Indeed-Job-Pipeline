@@ -1,0 +1,189 @@
+Gemini_Key: AIzaSyCK_E52s1prUr2Xi8KafWaPdlOERjgE74c 
+Model: gemini-2.5-flash-lite
+
+
+Refined Prompt Example (For Technical Tools) :
+
+Create a new column within new_df, call it top_tech_skills
+Use Gemini LLM "gemini-2.5-flash-lite" to create this field
+
+Gemini prompt: You are a helpful assistant that extracts technical tools from job descriptions.
+
+ 
+
+INPUT: Job description: {job_description from new_df}
+
+You are a job seeker. Analyse the job description and write the top technical tools mentioned in it.
+Only include technical tool names and no other words or extra characters.
+Remove qualifier or modifier like "premium", "modern" etc.
+Multiple tools should be comma separated.
+Example output: SQL, Azure, Databricks, Python
+
+
+
+Extract Technical Tools:
+Prompt 1:
+INPUT:
+        Job description: {description}
+
+Prompt:
+        You are a job seeker. Analyse the job description and write the top technical tools mentioned in it.
+        
+        Only include technical tool names and no other words or extra characters. Remove qualifier or modifier like "premium", "modern" etc.
+        
+        Multiple tools should be comma separated.
+        
+        Example output: SQL, Azure, Databricks, Python
+
+Prompt 2:
+
+INPUT:
+        LOCATION INPUT: {top_tech_skills}
+
+        INSTRUCTIONS:
+        - Read the above tech skills and rewrite it to include only technical tools. 
+        - Results should be in the same format (comma separated). 
+        - If there are no technical tools mentioned in the list, write "None".
+
+
+   
+
+Extract Role Category:
+Prompt:
+
+INPUT:
+        Job description: {description}
+        Tools: {top_tech_skills}
+        Job title:  {job_title}
+
+INSTRUCTIONS:
+        
+        Analyse the above job and determine if this is a Data Analyst or Data Engineer role.
+        
+        Select one or more of the following options only:
+
+        Data Analyst
+        Data Engineer
+
+        IMPORTANT RULE:
+        
+        - Choose only from the 2 options provided.
+        - If job can be done by both a Data Analyst and Data Engineer, then list them both separated by commas (e.g., Data Analyst, Data Engineer).
+
+Extract Function:
+Prompt:
+
+INPUT:
+        Job description: {description}
+INSTRUCTIONS:
+        
+        You are a job seeker. Analyse the job description and write which function this job is related to.
+        
+        Only include function name and no other words or extra characters. Remove qualifier or modifier like "premium", "modern" etc.
+        
+        Do not include "data analytics" related functions. Do not include industries or domains like banking, healthcare, education, financial services etc.
+        
+        Multiple functions should be comma separated.
+        
+        Example output: Finance, Marketing, Human Resources
+
+
+Extract Industry:
+Prompt:
+
+INPUT:
+        Job description: {description}
+
+INSTRUCTIONS:
+        
+        You are a job seeker. Analyse the job description and write which industry/domain this company is related to.
+        
+        Only include industry/domain name and no other words or extra characters. Remove qualifier or modifier like "premium", "modern" etc.
+        
+        Do not include "data analytics" related domains. Do not include function Finance, Marketing, Human Resources.
+        
+        Multiple industry/domain should be comma separated.
+        
+        Example output: Banking, construction, education, healthcare etc.
+
+Extract Experience Level:
+Prompt:
+
+
+INPUT:
+        Job description: {description}
+        Job title: {title}
+
+INSTRUCTIONS:
+        
+        You are a job seeker. Analyse the job description and write the experience level required for this job from one of the 4 options below:
+  
+        Entry-level
+        Associate
+        Senior
+        Very senior
+
+        The definition of these experience levels are as follows:  - 
+
+        Entry-level - junior role that will require 0 to 2 years of experience
+        Associate - Associate role that will require 2 to 5 years of experience
+        Senior - Senior role that will require 5-10 years of experience
+        Very senior - Very senior role that will require 10+ years of experience
+
+        IMPORTANT RULE:
+
+        - Only select one of the 4 options (Entry-level, Associate, Senior, Very senior)
+        - Do not add new words/characters or omit words in the options. 
+
+
+Extract Visa Requirements:
+Prompt:
+
+INPUT:
+        Job description: {description}
+
+        Task: As a job seeker, analyze the above job description and identify if it specifies any requirements related to residency or citizenship.
+        Select one or more of the following options:
+
+        Permanent Residency
+        Citizenship
+        Valid work visa
+        None mentioned
+
+        
+        IMPORTANT RULE:
+
+        Choose only from the 4 options provided.
+        If multiple requirements are specified, list them separated by commas (e.g., Permanent Residency, Citizenship).
+
+
+Extract Security Clearances:
+Prompt:
+
+INPUT:
+Job description: {description}
+
+        You are a job seeker. Analyse the job description and write if a security clearance required is for this job
+        
+        If a security clearance or police checks are required then write ""true"".
+        
+        Or else a ""false"".
+        
+        Do not include other words or extra characters. Remove qualifier or modifier etc.
+      
+Extract Location Type (Remote/Onsite/Hybrid)
+Prompt:
+
+INPUT:
+        LOCATION INPUT: {location}
+
+        Analyse this location and write if this location is one out of the following 2 options.
+        
+        Major city
+        Regional/remote
+        
+        Only select one of the 2 options above. Do not include any other words or extra characters.
+
+
+
+
